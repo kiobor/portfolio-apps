@@ -92,10 +92,13 @@ export function RestaurantCard({
   restaurant,
   variant,
   bestMatch,
+  priority = false,
 }: {
   restaurant: Restaurant;
   variant: CardVariant;
   bestMatch: boolean;
+  /** Prima card della lista: la foto si carica subito, perché è la prima cosa che si vede. */
+  priority?: boolean;
 }) {
   if (variant === "row") {
     return (
@@ -104,6 +107,8 @@ export function RestaurantCard({
         <RestaurantPhoto
           decorative
           restaurant={restaurant}
+          sizes="80px"
+          eager={priority}
           className="size-14 shrink-0 rounded-xl min-[360px]:size-20"
         />
         <RowDetails restaurant={restaurant} />
@@ -114,7 +119,12 @@ export function RestaurantCard({
   return (
     <article className="relative">
       <div className="relative">
-        <RestaurantPhoto decorative restaurant={restaurant} className="aspect-[1.75] w-full rounded-card" />
+        <RestaurantPhoto
+          decorative
+          eager={priority}
+          restaurant={restaurant}
+          className="aspect-[1.75] w-full rounded-card"
+        />
         {bestMatch && <Badge className="absolute top-3 left-3">Best match</Badge>}
       </div>
       <CardDetails restaurant={restaurant} />

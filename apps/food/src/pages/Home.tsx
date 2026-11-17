@@ -201,8 +201,14 @@ export function Home() {
           </div>
         )}
 
-        {results.map((r) => (
-          <RestaurantCard key={r.id} restaurant={r} variant={layout} bestMatch={r.id === bestId} />
+        {results.map((r, i) => (
+          <RestaurantCard
+            key={r.id}
+            restaurant={r}
+            variant={layout}
+            bestMatch={r.id === bestId}
+            priority={i === 0}
+          />
         ))}
       </div>
 
