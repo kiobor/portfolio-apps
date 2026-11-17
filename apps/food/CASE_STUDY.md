@@ -92,20 +92,27 @@ Writing the tests in a real browser found problems that looked fine on screen:
 
 - Restaurants and menus are made up, and search is a simple word match. There is no ranking or typo
   tolerance.
-- Photos are 1200×700 JPEGs of about 170 KB. Responsive image sizes would be the next performance gain.
-- Lighthouse (v13.6, mobile, live site): home 95 Performance, 100 Accessibility, 100 Best Practices,
-  92 SEO; restaurant page 93 / 100 / 100 / 92. CLS 0 and TBT 0 ms on both. The cost is the largest image:
-  LCP is 2.8 s on the home and 3.2 s on a restaurant page, because the 1200×700 photos are served as they
-  are (Lighthouse estimates 751 KiB saved on the home) and the JS bundle is loaded before first paint.
-- SEO is 92 and not 100 because the single-page-app rewrite also answers `/robots.txt` with the app's
-  HTML. A real `robots.txt` file fixes it.
+- Photos are served in two sizes (480 and 960 px wide, about 30 and 90 KB) with `srcset`. Newer formats such
+  as WebP or AVIF would shrink them further.
+- Lighthouse (v13.6, mobile, live site), measured twice:
+  - First deploy: home 95 Performance / 100 Accessibility / 100 Best Practices / 92 SEO; restaurant page
+    93 / 100 / 100 / 92. LCP 2.8 s and 3.2 s.
+  - After responsive images, a priority first photo and a real `robots.txt`: home 92 / 100 / 100 / 100;
+    restaurant page 94 / 100 / 100 / 100. LCP 3.2 s and 3.0 s. CLS 0 and TBT 0 ms in both runs.
+- What the second pass taught me: SEO went to 100 (the single-page-app rewrite had been answering
+  `/robots.txt` with the app's HTML) and the estimated image savings dropped from 751 KiB to 369 KiB on the
+  home, but **LCP did not improve**. Image size was not the bottleneck. The photo is only discovered after
+  the JavaScript bundle runs and the (simulated, 450 ms) catalogue request returns, and the CSS blocks the
+  first paint for about 830 ms. Single lab runs also vary by a few points, so 92 against 95 on the home is
+  within noise; I do not claim an improvement there.
 - Real-device testing was one phone, by hand. It is not a device matrix.
 - When the route changes, keyboard focus is not moved to the new page heading. The page title changes,
   but a screen-reader user would still have to look around. This is next on the list.
 
 ## What I would do next
 
-1. Responsive, smaller images (the main lever for LCP) and a `robots.txt`; then measure again.
+1. Lower LCP, where the real cost is: inline the critical CSS, split the JavaScript by route, and show the
+   first photo without waiting for the catalogue request (for example, prerendering the home). Measure again.
 2. Move focus to the page heading on every route change.
 3. Real search ranking and typo tolerance.
 4. Saved addresses and reorder from past orders.

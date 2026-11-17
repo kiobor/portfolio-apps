@@ -64,9 +64,9 @@ packages/config/    Shared TypeScript configuration
 - **Accessibility:** axe scans (WCAG 2.0 and 2.1, levels A and AA, plus best practices) run on 13 screens
   and states, including the filter sheet, dialogs, error and empty states. They found real bugs during
   development; see the case study.
-- **Lighthouse (mobile, on the live site):** home 95 / 100 / 100 / 92 and restaurant page 93 / 100 / 100 / 92
+- **Lighthouse (mobile, on the live site):** home 92 / 100 / 100 / 100 and restaurant page 94 / 100 / 100 / 100
   for Performance / Accessibility / Best Practices / SEO. Layout shift 0, blocking time 0 ms. The weakest
-  numbers are the largest image (LCP 2.8 s and 3.2 s) and `robots.txt`; see the case study.
+  number is LCP (3.2 s on the home, 3.0 s on a restaurant page); see the case study for why.
 - **Real device:** checked by hand on one phone (full purchase, reload mid-flow, direct links). Not a
   device matrix.
 
