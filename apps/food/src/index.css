@@ -1,0 +1,12 @@
+@import "tailwindcss";
+@import "@portfolio/ui/tokens.css";
+
+/* Tailwind v4 non scansiona i package del workspace da solo. */
+@source "../../../packages/ui/src";
+
+@utility no-scrollbar {
+  scrollbar-width: none;
+  &::-webkit-scrollbar {
+    display: none;
+  }
+}
