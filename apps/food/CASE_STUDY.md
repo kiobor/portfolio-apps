@@ -93,13 +93,19 @@ Writing the tests in a real browser found problems that looked fine on screen:
 - Restaurants and menus are made up, and search is a simple word match. There is no ranking or typo
   tolerance.
 - Photos are 1200×700 JPEGs of about 170 KB. Responsive image sizes would be the next performance gain.
-- Lighthouse scores and real-device tests have not been done yet, so I make no claims about them.
+- Lighthouse (v13.6, mobile, live site): home 95 Performance, 100 Accessibility, 100 Best Practices,
+  92 SEO; restaurant page 93 / 100 / 100 / 92. CLS 0 and TBT 0 ms on both. The cost is the largest image:
+  LCP is 2.8 s on the home and 3.2 s on a restaurant page, because the 1200×700 photos are served as they
+  are (Lighthouse estimates 751 KiB saved on the home) and the JS bundle is loaded before first paint.
+- SEO is 92 and not 100 because the single-page-app rewrite also answers `/robots.txt` with the app's
+  HTML. A real `robots.txt` file fixes it.
+- Real-device testing was one phone, by hand. It is not a device matrix.
 - When the route changes, keyboard focus is not moved to the new page heading. The page title changes,
   but a screen-reader user would still have to look around. This is next on the list.
 
 ## What I would do next
 
-1. Responsive images and a measured performance pass.
+1. Responsive, smaller images (the main lever for LCP) and a `robots.txt`; then measure again.
 2. Move focus to the page heading on every route change.
 3. Real search ranking and typo tolerance.
 4. Saved addresses and reorder from past orders.

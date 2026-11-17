@@ -13,7 +13,7 @@ They share one design system (`packages/ui`), so the four apps look and behave l
 | Flights | Planned | — |
 | Jobs | Planned | — |
 
-**Live demo:** not published yet.
+**Live demo:** https://portfolio-apps-beige.vercel.app
 **Design case study:** [apps/food/CASE_STUDY.md](apps/food/CASE_STUDY.md)
 
 ## Run it
@@ -64,7 +64,11 @@ packages/config/    Shared TypeScript configuration
 - **Accessibility:** axe scans (WCAG 2.0 and 2.1, levels A and AA, plus best practices) run on 13 screens
   and states, including the filter sheet, dialogs, error and empty states. They found real bugs during
   development; see the case study.
-- **Not measured yet:** Lighthouse performance scores and real-device testing.
+- **Lighthouse (mobile, on the live site):** home 95 / 100 / 100 / 92 and restaurant page 93 / 100 / 100 / 92
+  for Performance / Accessibility / Best Practices / SEO. Layout shift 0, blocking time 0 ms. The weakest
+  numbers are the largest image (LCP 2.8 s and 3.2 s) and `robots.txt`; see the case study.
+- **Real device:** checked by hand on one phone (full purchase, reload mid-flow, direct links). Not a
+  device matrix.
 
 ## Notes about the demo
 
