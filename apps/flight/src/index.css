@@ -1,0 +1,18 @@
+@import "tailwindcss";
+@import "@portfolio/ui/tokens.css";
+
+/* Tailwind v4 non scansiona i package del workspace da solo. */
+@source "../../../packages/ui/src";
+
+/* Accento blu notte al posto del verde di Nosh: si ridefiniscono i token, non i componenti. */
+:root {
+  --color-forest: #1c2f5c;
+  --color-forest-soft: #e3e8f4;
+}
+
+@utility no-scrollbar {
+  scrollbar-width: none;
+  &::-webkit-scrollbar {
+    display: none;
+  }
+}
