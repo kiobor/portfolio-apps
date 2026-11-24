@@ -95,34 +95,39 @@ export function Badge({ className, children }: { className?: string; children: R
 }
 
 /* ---------- SegmentedToggle ---------- */
-export type SegmentOption<T extends string> = { value: T; label: string; icon: ReactNode };
+export type SegmentOption<T extends string> = { value: T; label: string; icon?: ReactNode };
 
 export function SegmentedToggle<T extends string>({
   options,
   value,
   onChange,
   label,
+  variant = "icon",
 }: {
   options: SegmentOption<T>[];
   value: T;
   onChange: (value: T) => void;
   label: string;
+  /** "icon" (default): solo icona con etichetta accessibile. "text": etichetta visibile. */
+  variant?: "icon" | "text";
 }) {
+  const text = variant === "text";
   return (
-    <div role="group" aria-label={label} className="flex rounded-pill bg-tile p-1">
+    <div role="group" aria-label={label} className={cx("flex rounded-pill bg-tile p-1", text && "w-full")}>
       {options.map((option) => (
         <button
           key={option.value}
           type="button"
-          aria-label={option.label}
+          aria-label={text ? undefined : option.label}
           aria-pressed={option.value === value}
           onClick={() => onChange(option.value)}
           className={cx(
-            "grid h-8 w-10 place-items-center rounded-pill transition-colors",
+            "grid h-8 place-items-center rounded-pill transition-colors",
+            text ? "flex-1 px-3 text-sm font-medium" : "w-10",
             option.value === value ? "bg-surface text-ink shadow-soft" : "text-muted",
           )}
         >
-          {option.icon}
+          {text ? option.label : option.icon}
         </button>
       ))}
     </div>
@@ -177,7 +182,7 @@ export function TabBar({
 }) {
   return (
     <nav aria-label="Main" className="border-t border-line bg-cream pb-3">
-      <ul className="grid grid-cols-4">
+      <ul className="grid" style={{ gridTemplateColumns: `repeat(${items.length}, minmax(0, 1fr))` }}>
         {items.map((item) => {
           const active = item.id === activeId;
           return (
@@ -373,18 +378,30 @@ export function QuantityStepper({
   name,
   onAdd,
   onRemove,
+  min = 0,
+  max = Infinity,
+  labels,
 }: {
   quantity: number;
   /** Nome dell'articolo, per le etichette accessibili. */
   name: string;
   onAdd: () => void;
   onRemove: () => void;
+  /** Quantità minima: sotto non si scende (default 0). */
+  min?: number;
+  /** Quantità massima (default nessun limite). */
+  max?: number;
+  /** Etichette accessibili personalizzate al posto di quelle derivate da `name`. */
+  labels?: { add: string; remove: string; quantity: string };
 }) {
+  const addLabel = labels?.add ?? `Add another ${name}`;
+  const removeLabel = labels?.remove ?? `Remove one ${name}`;
+  const groupLabel = labels?.quantity ?? `${name} quantity`;
   if (quantity === 0) {
     return (
       <button
         type="button"
-        aria-label={`Add ${name}`}
+        aria-label={labels?.add ?? `Add ${name}`}
         onClick={onAdd}
         className="grid size-10 shrink-0 place-items-center rounded-pill border border-line bg-surface text-ink shadow-soft transition-colors hover:bg-tile"
       >
@@ -395,14 +412,15 @@ export function QuantityStepper({
   return (
     <div
       role="group"
-      aria-label={`${name} quantity`}
+      aria-label={groupLabel}
       className="flex h-10 shrink-0 items-center rounded-pill bg-forest text-cream"
     >
       <button
         type="button"
-        aria-label={`Remove one ${name}`}
+        aria-label={removeLabel}
+        disabled={quantity <= min}
         onClick={onRemove}
-        className="grid size-10 place-items-center"
+        className="grid size-10 place-items-center disabled:opacity-40"
       >
         <MinusIcon size={18} />
       </button>
@@ -411,9 +429,10 @@ export function QuantityStepper({
       </span>
       <button
         type="button"
-        aria-label={`Add another ${name}`}
+        aria-label={addLabel}
+        disabled={quantity >= max}
         onClick={onAdd}
-        className="grid size-10 place-items-center"
+        className="grid size-10 place-items-center disabled:opacity-40"
       >
         <PlusIcon size={18} />
       </button>

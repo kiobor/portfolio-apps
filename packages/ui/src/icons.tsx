@@ -54,6 +54,22 @@ export const FilterIcon = createIcon(
     <circle cx="8" cy="17" r="2" />
   </>,
 );
+export const PlaneIcon = createIcon(
+  <path d="M10.5 13.5 4 12l1.5-1.5 6 .5 4-5.5 2 .5-2 6.5 5 2.5-1 1.5-5.5-1.5-2.5 4.5-1.5-.5z" />,
+);
+export const CalendarIcon = createIcon(
+  <>
+    <rect x="4" y="5.5" width="16" height="14.5" rx="2.5" />
+    <path d="M4 10h16M8.5 3.5v4M15.5 3.5v4" />
+  </>,
+);
+export const SwapIcon = createIcon(
+  <>
+    <path d="M7 4 3.5 7.5 7 11M3.5 7.5h14" />
+    <path d="m17 13 3.5 3.5L17 20M20.5 16.5h-14" />
+  </>,
+);
+export const CheckIcon = createIcon(<path d="m5 12.5 4.5 4.5L19 7.5" />);
 export const SortIcon = createIcon(
   <>
     <path d="M8 20V5m0 0L4.5 8.5M8 5l3.5 3.5" />
