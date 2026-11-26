@@ -9,11 +9,11 @@ They share one design system (`packages/ui`), so the four apps look and behave l
 | App | Status | What it shows |
 |---|---|---|
 | [**Nosh**](apps/food) — food delivery | Done | Discovery with filters and live result counts, restaurant menu, cart, checkout, order tracking, search |
-| [**Skylark**](apps/flight) — flights | Built, not deployed yet | Search (one way or round trip), results with Best / Cheapest / Fastest, filters in the URL with live counts, itinerary, fare choice, passengers, booking, trips |
+| [**Skylark**](apps/flight) — flights | Done | Search (one way or round trip), results with Best / Cheapest / Fastest, filters in the URL with live counts, itinerary, fare choice, passengers, booking, trips |
 | Shopping | Planned | — |
 | Jobs | Planned | — |
 
-**Live demo (Nosh):** https://portfolio-apps-beige.vercel.app
+**Live demos:** [Nosh](https://portfolio-apps-beige.vercel.app) · [Skylark](https://skylark-flights.vercel.app)
 **Design case studies:** [Nosh](apps/food/CASE_STUDY.md) · [Skylark](apps/flight/CASE_STUDY.md)
 
 ## Run it
@@ -72,7 +72,8 @@ packages/config/    Shared TypeScript configuration
 - **Lighthouse (mobile, on the live Nosh site):** home 92 / 100 / 100 / 100 and restaurant page
   94 / 100 / 100 / 100 for Performance / Accessibility / Best Practices / SEO. Layout shift 0, blocking
   time 0 ms. The weakest number is LCP (3.2 s on the home, 3.0 s on a restaurant page); see the case study
-  for why. Skylark has not been measured yet.
+  for why. On the live Skylark site (one run per page): home 99 / 100 / 100 / 100 and results page
+  99 / 100 / 100 / 100, LCP 1.8 s and 1.7 s, blocking time 0 ms, layout shift 0 and 0.016.
 - **Real device:** Nosh was checked by hand on one phone (full purchase, reload mid-flow, direct links).
   Not a device matrix. Skylark has not been checked on a phone yet.
 

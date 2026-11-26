@@ -121,13 +121,19 @@ bad date, a malformed filter) falls back to safe defaults and never crashes.
   clear in the breakdown but a person comparing only the cards sees slightly lower numbers than they pay.
 - The "error" state of the results is covered by tests of the component, not in the real browser: the data
   is generated in the page, so there is no network request to make fail.
-- Lighthouse has **not been measured yet**; it will be run on the public link once the app is deployed.
+- Lighthouse (v13.6, mobile, live site, **one run per page**, so a few points of noise are normal):
+  home 99 Performance / 100 Accessibility / 100 Best Practices / 100 SEO, LCP 1.8 s, CLS 0, TBT 0 ms;
+  results page 99 / 100 / 100 / 100, LCP 1.7 s, CLS 0.016, TBT 0 ms. The home waits for no request, which
+  is the lesson from Nosh, and it shows: LCP is a second faster. What is left is about 810 ms of
+  render-blocking CSS and about 70 KiB of unused JavaScript, because the app is one bundle.
+  The results LCP is the page header, not the flight list, so it does not include the simulated 600 ms
+  search.
 - Not checked on a real phone yet, only in a desktop browser at phone sizes.
 - When the route changes, keyboard focus is not moved to the new page heading (the same gap as Nosh).
 
 ## What I would do next
 
-1. Deploy, measure Lighthouse on the live link and check the app by hand on a phone.
+1. Check the app by hand on a real phone, and split the JavaScript by route and inline the critical CSS.
 2. Move focus to the page heading on every route change.
 3. A calendar view of prices around the chosen date, which is where flexible travellers actually decide.
 4. Children and infants, and a seat map.
